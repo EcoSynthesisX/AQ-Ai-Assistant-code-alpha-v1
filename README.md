@@ -1,2 +1,2 @@
-# AQ AI Assistant
- Air Quality Bot
+# Air Quaility Ai Assistant
+ Ream more https://github.com/EcoSynthesisX/AQ-Ai-Assistant-docs

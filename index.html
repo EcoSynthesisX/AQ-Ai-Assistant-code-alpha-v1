@@ -4,78 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Quality Bot</title>
-    <style>
-        /* Inline styles for simplicity */
-        body {
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background: #e4f9f5;
-        }
-        header {
-            background: #30e3ca;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            color: #fff;
-        }
-        #connectWallet {
-            margin-top: 10px;
-        }
-        main {
-            padding: 20px;
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        #chatInterface {
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        #chatMessages {
-            height: 200px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            overflow-y: auto;
-            padding: 10px;
-        }
-        input[type="text"] {
-            width: calc(100% - 110px);
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-        }
-        button {
-            padding: 10px 20px;
-            background: #30e3ca;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 20px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-        @media (max-width: 768px) {
-            input[type="text"], button {
-                width: 100%;
-                margin: 5px 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.0/web3.min.js"></script>
-    <!-- Add Twitter Widgets.js for Twitter feed -->
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </head>
 <body>
     <header>
@@ -113,33 +43,43 @@
         <p>&copy; 2023 Air Quality Bot</p>
     </footer>
     <script>
-        // Placeholder for Web3 integration and backend API interactions
-
+        // Inline script for simplicity, but you should move this to a separate JS file in production.
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Connect wallet button logic
-            document.getElementById('connectWallet').addEventListener('click', () => {
-                // Placeholder for Web3 wallet connection logic
-            });
+            // Placeholder function to update UI after wallet connection
+            function updateUIAfterWalletConnect(account) {
+                console.log('Wallet connected: ' + account);
+                // Update the UI to reflect the wallet is connected
+                // e.g., change the 'Connect Wallet' button to show 'Wallet Connected'
+                const connectButton = document.getElementById('connectWallet');
+                connectButton.textContent = 'Wallet Connected';
+                connectButton.disabled = true;
+            }
 
-            // Send message to bot logic
-            document.getElementById('sendMessage').addEventListener('click', () => {
-                const userMessage = document.getElementById('userMessage').value;
-                // Placeholder for sending message to the bot and receiving a response
-                // Example: sendMessageToBot(userMessage);
-            });
+            // Web3 wallet connection logic
+            async function connectWallet() {
+                if (window.ethereum) { // Check if MetaMask is installed
+                    try {
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        updateUIAfterWalletConnect(account);
+                    } catch (error) {
+                        if (error.code === 4001) {
+                            // User rejected the request
+                            console.error('User denied account access...');
+                        } else {
+                            console.error(error);
+                        }
+                    }
+                } else {
+                    console.error('MetaMask not detected...');
+                }
+            }
 
-            // Fetch air quality data and update the UI
-            // Example: fetchAirQualityData();
+            // Add event listener to the wallet connect button
+            document.getElementById('connectWallet').addEventListener('click', connectWallet);
 
-            // Initialize the Twitter feed integration
-            // Example: initTwitterFeed();
+            // Other event listeners and logic...
         });
-
-        // Define the functions for the above examples here, e.g.:
-        // async function fetchAirQualityData() { ... }
-        // async function sendMessageToBot(message) { ... }
-        // function initTwitterFeed() { ... }
-
     </script>
 </body>
 </html>
